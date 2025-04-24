@@ -9,14 +9,14 @@ open Nat
 universe u
 
 /-- Merge two sorted lists into a single sorted list. -/
-def merge {α : Type u} [Ord α] [LE α]                      -- the relation
+def merge {α : Type u} [Ord α] (xs ys : List α) : List α :=
+  match xs, ys with
   | [], ys => ys
   | xs, [] => xs
   | x :: xs, y :: ys =>
-    if x ≤ y then
-      x :: merge xs (y :: ys)
-    else
-      y :: merge (x :: xs) ys
+    match Ord.compare x y with
+    | .lt | .eq => x :: merge xs (y :: ys)
+    | .gt =>  y :: merge (x :: xs) ys
 
 /-- Split a list into two approximately equal parts. -/
 def split {α : Type u} : List α → List α × List α
