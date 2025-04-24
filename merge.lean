@@ -26,13 +26,21 @@ def split {α : Type u} : List α → List α × List α
     let (xs, ys) := split zs
     (x :: xs, y :: ys)
 
+#eval sizeOf ([0]: List Nat)  -- 0
+
 /-- Sort a list using the merge sort algorithm. -/
 def mergeSort {α : Type u} [Ord α] : List α → List α
   | [] => []
   | [x] => [x]
   | xs =>
     let (ys, zs) := split xs
+    have len1 : sizeOf ys < sizeOf xs := by sorry
+    have len2 : sizeOf zs < sizeOf xs := by sorry
     merge (mergeSort ys) (mergeSort zs)
+
+
+  --termination_by
+
 
 /-- Proof that merge preserves length. -/
 theorem merge_length {α : Type u} [Ord α] (xs ys : List α) :
