@@ -19,7 +19,8 @@ def merge {α : Type u} [Ord α] (xs ys : List α) : List α :=
     | .gt =>  y :: merge (x :: xs) ys
 
 /-- Split a list into two approximately equal parts. -/
-def split {α : Type u} : List α → List α × List α
+def split {α : Type u} (l : List α) : List α × List α :=
+  match l with
   | [] => ([], [])
   | [x] => ([x], [])
   | x :: y :: zs =>
